@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-
-
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -10,8 +8,8 @@ function Square({ value, onSquareClick }) {
   );
 }
 
-export default function Board() {
-  const[xIsNext, setXIsNext] = useState(true);
+export function Board() {
+  const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
 
   function handleClick(i) {
@@ -25,19 +23,19 @@ export default function Board() {
       nextSquares[i] = 'O';
     }
     setSquares(nextSquares);
-    setXIsNext(!xIsNext); 
+    setXIsNext(!xIsNext);
   }
 
   const winner = calculateWinner(squares);
   let status;
-  if (winner)  {
+  if (winner) {
     status = "Winner: " + winner;
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
   return (
     <>
-      <div classNmae="status">{status}</div>
+      <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -59,9 +57,24 @@ export default function Board() {
   );
 }
 
+export default function Game() {
+  const [isNext, setXIsNext] =useState(true);
+  const [history, setHistory] = usestate([Array(9).fill(null)])
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board />
+        <div className="game-info">
+          <ol>{/* TODO */}</ol>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function calculateWinner(squares) {
   const lines = [
-     [0, 1, 2],
+    [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
     [0, 3, 6],
